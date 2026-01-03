@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure-8^3o3(mt1s=5f_lctfw2i$7f-b1pm%kmf(9v0a-!aradg24cdf
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'pizza-mania.onrender.com',
-    'www.pizza-mania.onrender.com'
+    '*'
 ]
 
 
