@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu | Pizza Mania{% endblock %}
+
+{% block content %}
+
+<div class="text-center mb-4 menu-header">
+    <h1 class="fw-bold">Our Pizza Menu 🍕</h1>
+    <p class="lead">Choose your favorite pizza</p>
+</div>
+
+<!-- CATEGORY FILTER -->
+<div class="text-center mb-4 menu-filters">
+
+    <a href="/menu/" class="btn btn-dark btn-sm me-2 mb-2">All</a>
+
+{% for category in categories %}
+    <a href="/menu/?category={{ category.id }}"
+       class="btn btn-outline-dark btn-sm me-2 mb-2">
+        {{ category.name }}
+    </a>
+{% endfor %}
+
+</div>
+
+<!-- PIZZA LIST -->
+<div class="row">
+    {% for pizza in pizaas %}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+
+            {% if pizza.image %}
+                <img src="{{ pizza.image.url }}" class="card-img-top" height="220">
+            {% endif %}
+
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ pizza.name }}</h5>
+                <p class="card-text">
+                    ₹{{ pizza.price }}
+                </p>
+
+                {% if pizza.description %}
+                    <p class="text-muted small">
+                        {{ pizza.description|truncatechars:60 }}
+                    </p>
+                {% endif %}
+
+                <a href="{% url 'add_to_cart' pizza.id %}"
+   class="btn btn-primary btn-sm">
+    Add to Cart
+</a>
+            </div>
+        </div>
+    </div>
+
+    {% empty %}
+    <p class="text-center">No pizzas available.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

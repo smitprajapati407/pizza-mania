@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Pizza Mania{% endblock %}
+
+{% block content %}
+
+<div class="text-center mb-5 home-hero">
+    <h1 class="fw-bold">Pizza Mania </h1>
+    <p class="lead">Veg & Non-Veg </p>
+</div>
+
+
+
+
+<div class="row">
+    {% for category in categories %}
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            {% if category.image %}
+                <img src="{{ category.image.url }}" class="card-img-top" height="250">
+            {% endif %}
+            <div class="card-body text-center">
+                <h4>{{ category.name }}</h4>
+                <a href="/menu/?category={{ category.id }}"
+                   class="btn btn-primary mt-2">
+                    View Menu
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No categories found.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
+

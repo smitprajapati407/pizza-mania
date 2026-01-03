@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}My Orders | Pizza Mania{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Orders 📦</h2>
+
+{% for order in orders %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>Order #{{ order.id }}</h5>
+        <p><strong>Total:</strong> ₹{{ order.total_amount }}</p>
+        <p><strong>Status:</strong> {{ order.payment_status }}</p>
+        <p><strong>Date:</strong> {{ order.created_at }}</p>
+
+        <a href="{% url 'download_invoice' order.id %}"
+           class="btn btn-sm btn-outline-primary mt-2">
+            Download Invoice 🧾
+        </a>
+    </div>
+</div>
+{% empty %}
+<p>You have not placed any orders yet.</p>
+{% endfor %}
+{% endblock %}

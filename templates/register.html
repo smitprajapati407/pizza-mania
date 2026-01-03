@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Register | Pizza Mania{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4 register-card">
+
+        <h3 class="text-center mb-4">Create Account </h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text"
+                       name="username"
+                       class="form-control"
+                       placeholder="Choose a username"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Enter email"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Create password"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <input type="password"
+                       name="confirm"
+                       class="form-control"
+                       placeholder="Confirm password"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100">
+                Register
+            </button>
+        </form>
+
+        <p class="text-center mt-3">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </p>
+
+    </div>
+</div>
+{% endblock %}

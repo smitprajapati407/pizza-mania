@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+  <h3 class="mb-4">Choose Delivery Option</h3>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="delivery_type" value="HOME" checked>
+      <label class="form-check-label">Home Delivery</label>
+    </div>
+
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="radio" name="delivery_type" value="PICKUP">
+      <label class="form-check-label">Store Pickup</label>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Delivery Address</label>
+      <textarea class="form-control" name="address" rows="3"
+        placeholder="Enter delivery address (required for home delivery)"></textarea>
+    </div>
+
+    <button class="btn btn-primary">Continue to Checkout</button>
+  </form>
+</div>
+
+{% endblock %}

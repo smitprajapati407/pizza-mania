@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Checkout | Pizza Mania{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Checkout 💳</h2>
+
+<!-- DELIVERY DETAILS -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Delivery Details</h5>
+        <p><strong>Type:</strong> {{ delivery_type }}</p>
+
+        {% if delivery_type == "HOME" %}
+            <p><strong>Address:</strong> {{ address }}</p>
+        {% else %}
+            <p><strong>Pickup:</strong> Store Pickup</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ORDER SUMMARY -->
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Pizza</th>
+            <th>Qty</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.pizza.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="text-end mt-3">Total: ₹{{ total }}</h4>
+
+<button id="rzp-button1" class="btn btn-success btn-lg mt-3">
+    Pay with Razorpay
+</button>
+
+<!-- RAZORPAY -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var options = {
+    "key": "{{ razorpay_key }}",
+    "amount": "{{ total|floatformat:0 }}00",
+    "currency": "INR",
+    "name": "Pizza Mania",
+    "description": "Pizza Order Payment",
+    "order_id": "{{ order.razorpay_order_id }}",
+
+    "handler": function (response) {
+        fetch("{% url 'payment_success' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature
+            })
+        })
+        .then(() => {
+            window.location.href = "{% url 'order_success' order.id %}";
+        });
+    },
+
+    "theme": {
+        "color": "#198754"
+    }
+};
+
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+
+{% endblock %}

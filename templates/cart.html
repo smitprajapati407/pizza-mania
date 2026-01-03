@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Cart | Pizza Mania{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Cart 🛒</h2>
+
+{% if items %}
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Pizza</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.pizza.name }}</td>
+            <td>
+                <a href="{% url 'decrement_quantity' item.id %}" class="btn btn-sm btn-outline-secondary">−</a>
+                <strong class="mx-2">{{ item.quantity }}</strong>
+                <a href="{% url 'increment_quantity' item.id %}" class="btn btn-sm btn-outline-secondary">+</a>
+            </td>
+            <td>₹{{ item.pizza.price }}</td>
+            <td>₹{{ item.subtotal }}</td>
+            <td>
+                <a href="{% url 'remove_from_cart' item.id %}"
+                   class="btn btn-sm btn-danger">
+                    Remove
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="text-end">Total: ₹{{ total }}</h4>
+
+<div class="text-end mt-3">
+    <a href="{% url 'checkout' %}" class="btn btn-success btn-lg">
+        Proceed to Checkout
+    </a>
+</div>
+
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+{% endblock %}

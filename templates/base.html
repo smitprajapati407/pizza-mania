@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Pizza Mania{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+
+        <!-- LOGO -->
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+    <img src="{% static 'images/logo.jpg' %}"
+         alt="Pizza Mania Logo"
+         class="navbar-logo">
+</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <!-- LEFT LINKS -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}"
+                       href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'Menu' in request.path %}active{% endif %}"
+                       href="{% url 'Menu' %}">Menu</a>
+                </li>
+            </ul>
+
+            <!-- SEARCH BAR -->
+            <form class="d-flex me-3" method="GET" action="{% url 'Menu' %}">
+                <input
+                    class="form-control form-control-sm me-2"
+                    type="search"
+                    name="q"
+                    placeholder="Search pizzas..."
+                >
+                <button class="btn btn-outline-light btn-sm" type="submit">
+                    Search
+                </button>
+            </form>
+
+            <!-- AUTH LINKS -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="nav-link disabled">
+                            Hi, {{ user.username }}
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'order_history' %}">
+                            My Orders
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container mt-3">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="container my-4">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer class="footer mt-5">
+    <div class="container py-4">
+        <div class="row">
+
+            <!-- ABOUT -->
+            <div class="col-md-3 mb-3">
+                <h5> Pizza Mania</h5>
+                <p class="small">
+                    Freshly baked pizzas delivered hot & fast to your doorstep.
+                </p>
+            </div>
+
+            <!-- QUICK LINKS -->
+            <div class="col-md-3 mb-3">
+                <h6>Quick Links</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'Menu' %}">Menu</a></li>
+                
+                    <li><a href="{% url 'order_history' %}">My Orders</a></li>
+                </ul>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="col-md-3 mb-3">
+                <h6>Contact Us</h6>
+                <p class="small mb-1">📞 +91 98765 43210</p>
+                <p class="small mb-1">📧 support@pizzamania.com</p>
+                <p class="small">📍 Ahmedabad, India</p>
+            </div>
+
+            <!-- DELIVERY INFO -->
+            <div class="col-md-3 mb-3">
+                <h6>Delivery Info</h6>
+                <p class="small mb-1">🚚 Home Delivery & Store Pickup</p>
+                <p class="small mb-1">🕒 10:00 AM – 11:00 PM</p>
+                <p class="small">💳 Secure Payments via Razorpay</p>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <!-- BOTTOM BAR -->
+        <div class="text-center small">
+            © {{ year|default:2026 }} Pizza Mania • All Rights Reserved
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
