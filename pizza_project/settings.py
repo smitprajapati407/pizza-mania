@@ -27,8 +27,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     'pizza-mania.onrender.com',
-    'localhost',
-    '127.0.0.1'
+    'www.pizza-mania.onrender.com'
 ]
 
 
