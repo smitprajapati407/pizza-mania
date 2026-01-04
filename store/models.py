@@ -15,7 +15,12 @@ class Category(models.Model):
 class Pizaa(models.Model):
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     name=models.CharField(max_length=100)
-    image = CloudinaryField('image')
+    image = CloudinaryField(
+        'image',
+        folder='pizaa',
+        overwrite=False,
+        unique_filename=True
+    )
     price=models.PositiveIntegerField()
     description=models.TextField()
 
