@@ -1,6 +1,12 @@
 .footer {
     background-color: #111;
     color: #ddd;
+    margin-top: auto; /* pushes footer to bottom */
+    width: 100%;
+    background: #111;
+    padding: 15px 10px;
+    text-align: center;
+    font-size: 14px;
 }
 
 .footer h5,
@@ -27,6 +33,22 @@
 .footer hr {
     border-color: #333;
 }
+/* GLOBAL RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY FIX */
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* stops horizontal scroll */
+}
+
+
+
 
 /* ===== HOME PAGE ===== */
 .home-hero {
@@ -49,6 +71,9 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* CATEGORY CARDS */
@@ -523,4 +548,27 @@ body {
         margin-bottom: 30px;
     }
 
+}
+
+
+
+
+@media (max-width: 768px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    footer {
+        font-size: 13px;
+        padding: 12px;
+    }
 }
