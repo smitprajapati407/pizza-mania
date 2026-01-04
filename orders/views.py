@@ -183,9 +183,11 @@ def download_invoice(request, order_id):
     p = canvas.Canvas(response, pagesize=A4)
     width, height = A4
 
+    # Title
     p.setFont("Helvetica-Bold", 16)
-    p.drawString(200, height - 50, "Invoice")
+    p.drawString(230, height - 50, "INVOICE")
 
+    # Order details
     p.setFont("Helvetica", 12)
     p.drawString(50, height - 100, f"Order ID: {order.id}")
     p.drawString(50, height - 120, f"Customer: {order.user.username}")
@@ -193,10 +195,23 @@ def download_invoice(request, order_id):
     p.drawString(50, height - 160, f"Payment Status: {order.payment_status}")
     p.drawString(50, height - 180, "Items:")
 
-    y = height - 200
-    for item in order.items.all():
-        p.drawString(60, y, f"{item.pizza.name} - Qty: {item.quantity} - Price: ₹{item.price} - Subtotal: ₹{item.subtotal()}")
+    # Items
+    y = height - 210
+    items = OrderItem.objects.filter(order=order)
+
+    for item in items:
+        subtotal = item.quantity * item.price
+        p.drawString(
+            60,
+            y,
+            f"{item.pizza.name} | Qty: {item.quantity} | Price: ₹{item.price} | Subtotal: ₹{subtotal}"
+        )
         y -= 20
+
+        if y < 50:  # page overflow safety
+            p.showPage()
+            p.setFont("Helvetica", 12)
+            y = height - 50
 
     p.showPage()
     p.save()
