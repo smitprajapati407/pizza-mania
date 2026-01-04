@@ -29,7 +29,8 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
-
+import os
+import cloudinary
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
     'store',
     'orders',
     'accounts',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -124,8 +127,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+
 
 RAZORPAY_KEY_ID = "rzp_test_RzRyHj14kPmIAb"
 RAZORPAY_KEY_SECRET = "KibZMl4ucLVGCwuh8jBl4rBp"
@@ -133,3 +135,11 @@ RAZORPAY_KEY_SECRET = "KibZMl4ucLVGCwuh8jBl4rBp"
 LOGIN_URL = '/accounts/login/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
+)
