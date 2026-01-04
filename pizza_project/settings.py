@@ -23,11 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8^3o3(mt1s=5f_lctfw2i$7f-b1pm%kmf(9v0a-!aradg24cdf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '*'
 ]
+SECURE_SSL_REDIRECT = True
 
 import os
 import cloudinary
@@ -142,7 +143,7 @@ cloudinary.config(
     cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
     api_key=os.environ.get("CLOUDINARY_API_KEY"),
     api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
-    secure=True
-    SECURE_SSL_REDIRECT = True
+    secure=True,
+ 
 
-)
+)   
