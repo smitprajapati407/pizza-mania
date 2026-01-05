@@ -89,7 +89,7 @@ class OrderItem(models.Model):
     pizza = models.ForeignKey(Pizaa, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    delivery_type = models.CharField(max_length=10)
+    delivery_type = models.CharField(max_length=100)
     address = models.TextField(blank=True, null=True)
-    payment_status = models.CharField(max_length=20)
+    payment_status = models.CharField(max_length=100)
 
