@@ -26,13 +26,12 @@ SECRET_KEY = 'django-insecure-8^3o3(mt1s=5f_lctfw2i$7f-b1pm%kmf(9v0a-!aradg24cdf
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*'
+    "127.0.0.1",
+    "localhost",
 ]
-SECURE_SSL_REDIRECT = True
 
-import os
-import cloudinary
-import dj_database_url
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,8 +44,7 @@ INSTALLED_APPS = [
     'store',
     'orders',
     'accounts',
-    'cloudinary',
-    'cloudinary_storage',
+    
 ]
 
 MIDDLEWARE = [
@@ -82,24 +80,18 @@ WSGI_APPLICATION = 'pizza_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+import os
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+
+
 
 
 # Password validation
@@ -147,15 +139,10 @@ RAZORPAY_KEY_SECRET = "KibZMl4ucLVGCwuh8jBl4rBp"
 
 LOGIN_URL = '/accounts/login/'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
-    secure=True,
- 
 
-)   
+# Media files (Uploaded images)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
