@@ -43,7 +43,7 @@ class Order(models.Model):
 
     # 🔹 Delivery fields
     delivery_type = models.CharField(
-        max_length=10,
+        max_length=100,
         choices=DELIVERY_CHOICES
     )
     delivery_address = models.TextField(
@@ -53,7 +53,7 @@ class Order(models.Model):
 
     # 🔹 Payment fields
     payment_status = models.CharField(
-        max_length=20,
+        max_length=100,
         default="PENDING"
     )
 
