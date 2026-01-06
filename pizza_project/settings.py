@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'store',
     'orders',
     'accounts',
-    "cloudinary",
-    "cloudinary_storage",
+    'cloudinary',
+    'cloudinary_storage',
     
 ]
 
@@ -144,10 +144,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-INSTALLED_APPS += [
-    "cloudinary",
-    "cloudinary_storage",
-]
+
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
