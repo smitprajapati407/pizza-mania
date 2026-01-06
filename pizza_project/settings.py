@@ -26,25 +26,27 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [".vercel.app"]
+ALLOWED_HOSTS = ['*']
 
-
+CSRF_TRUSTED_ORIGINS = ['https://*.netlify.app']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
     'store',
     'orders',
     'accounts',
-    'cloudinary',
-    'cloudinary_storage',
+    
+    
     
 ]
 
@@ -83,14 +85,14 @@ WSGI_APPLICATION = 'pizza_project.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 import os
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+import dj_database_url
 
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
+}
 
 
 
@@ -133,10 +135,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-RAZORPAY_KEY_ID = "rzp_test_RzRyHj14kPmIAb"
-RAZORPAY_KEY_SECRET = "KibZMl4ucLVGCwuh8jBl4rBp"
+RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID')   
+RAZORPAY_KEY_SECRET = os.environ.get('RAZORPAY_KEY_SECRET')
 
 LOGIN_URL = '/accounts/login/'
 
@@ -155,8 +157,3 @@ cloudinary.config(
     api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
 )
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://*.vercel.app",
-]
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
