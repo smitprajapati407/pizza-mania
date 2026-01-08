@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cloudinary',
-    'store',
+    'store.apps.StoreConfig',
     'orders',
     'accounts',
     
