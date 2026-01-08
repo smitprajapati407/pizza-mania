@@ -161,6 +161,8 @@ import cloudinary.api
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
+MEDIA_URL = '/media/'
+
 CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com",
 ]

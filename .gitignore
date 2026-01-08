@@ -10,3 +10,12 @@ db.sqlite3
 
 # Static collected files
 staticfiles/
+
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Django
+db.sqlite3
+.env
