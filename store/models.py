@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from cloudinary.models import CloudinaryField
 
 
 
@@ -16,7 +15,7 @@ class Category(models.Model):
 class Pizaa(models.Model):
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     name=models.CharField(max_length=100)
-    image = CloudinaryField('image')
+    image = models.ImageField(upload_to='pizza_images/')
 
     price=models.PositiveIntegerField()
     description=models.TextField()
