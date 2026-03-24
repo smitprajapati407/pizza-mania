@@ -31,7 +31,7 @@ Users can browse pizzas, add items to cart, place orders, and simulate payments.
 
 ### 1. Clone the repository
 
-git clone https://github.com/your-username/pizza-mania.git
+git clone https://github.com/smitprajapati407/pizza-mania.git
 cd pizza-mania
 
 ### 2. Create virtual environment
